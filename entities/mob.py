@@ -31,6 +31,7 @@ class Mob(pygame.sprite.Sprite):
         self.xp_points = self.XP_POINTS
         # Imagem e posição
         self._init_image_atributes(images)
+        self.animation_speed = self.ANIMATION_SPEED
         # Atributos de combate
         self.attack_range = self.ATTACK_RANGE
         self.receive_damage_sound = sounds["scream"]
@@ -38,11 +39,7 @@ class Mob(pygame.sprite.Sprite):
         # Components
         self.attack_component = BasicAttackComponent(self, self.strength, 25, self.attack_range, sounds["hit_player"], self.event_manager)
         self.life_bar_component = LifeBarComponent(self, event_manager, width=60, height=8, color=RED)
-        self.animation_component = AnimationComponent(self, self.default_frames, self.event_manager)
-
-        # Tempo de animação
-        self.animation_speed = self.ANIMATION_SPEED
-        self.animation_counter = 0
+        self.animation_component = AnimationComponent(self, self.default_frames, self.animation_speed)
 
 
     def _init_image_atributes(self, images):

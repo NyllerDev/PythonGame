@@ -37,7 +37,7 @@ class Troll(pygame.sprite.Sprite):
         self.attack_duration = self.ATTACK_DURATION
         self.attack_speed = self.ATTACK_SPEED
         # Components
-        self.animation_component = AnimationComponent(self, self.idle_frames, self.event_manager)
+        self.animation_component = AnimationComponent(self, self.idle_frames, self.ANIMATION_SPEED)
         self.attack_component = BasicAttackComponent(self, self.strength, self.attack_duration, self.ATTACK_RANGE, 
                                                      sounds, self.event_manager)
         self.life_bar_component = LifeBarComponent(self, self.event_manager, width=50, height=8, color=RED)

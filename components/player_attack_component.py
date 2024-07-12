@@ -1,3 +1,4 @@
+from typing import Tuple
 from components.attack_component import AttackComponent
 from components.attack_animation import AttackAnimation
 from components.attack_hitbox import AttackHitbox
@@ -5,7 +6,7 @@ from components.attack_hitbox import AttackHitbox
 class PlayerAttackComponent(AttackComponent):
     """ Classe para gerenciar o componente de ataque do player. """
 
-    def __init__(self, player, sounds, event_manager) -> None:
+    def __init__(self, player, sounds: dict, event_manager) -> None:
         super().__init__(player, event_manager)
         self.player = player
         self.sounds = sounds
@@ -23,7 +24,7 @@ class PlayerAttackComponent(AttackComponent):
             self.event_manager.notify({'type': 'player_attack', 'state': 'start'})
 
 
-    def update(self, delta_time) -> None:
+    def update(self, delta_time: float) -> None:
         """ Atualiza o estado de ataque. """
         if self.state == self.STATE_ATTACKING:
             self.attack_animation.update_animation(delta_time)
@@ -48,20 +49,13 @@ class PlayerAttackComponent(AttackComponent):
                     self.hit_targets.add(target)
 
 
-    def _get_attack_details(self, attack_type):
-        """ Configura os detalhes do ataque com base no tipo. """
-        if attack_type == 1:
-            return self.player.attack_damage, True
-        elif attack_type == 2:
-            return self.player.cannon_damage, False
-        else:
-            raise ValueError(f"Tipo de ataque desconhecido: {attack_type}")
-
-
-    def _inflict_damage(self, target, damage: int) -> None:
-        """ Inflige dano ao alvo e lida com os eventos relativos. """
-        target.receive_damage(damage)
-        self.check_target_life(target)
+    def _get_attack_details(self, attack_type: int) -> Tuple[int, bool]:
+        """ Configura os detalhes do ataque com base no seu tipo. """
+        attack_details = {
+            1: (self.player.attack_damage, True),
+            2: (self.player.cannon_damage, False)
+        }
+        return attack_details[attack_type]
 
 
     def _reset_attack(self) -> None:

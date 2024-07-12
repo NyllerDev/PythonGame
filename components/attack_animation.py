@@ -29,7 +29,6 @@ class AttackAnimation:
     def update_animation(self, delta_time) -> None:
         """ Avança os frames da animação de ataque. """
         if self.duration_timer > 0:
-            print(f'frame: {self.current_frame_index}')
             self.frame_counter += self.animation_speed * delta_time
             if self.frame_counter >= 1:
                 self.frame_counter = 0
@@ -37,7 +36,13 @@ class AttackAnimation:
             self._update_player_image()
             self.duration_timer -= delta_time
         else:
-            self.reset()  # Ensure the animation resets when the duration is over
+            self.reset()
+
+
+    def reset(self) -> None:
+        self.frame_counter = 0
+        self.current_frame_index = 0
+        self.duration_timer = 0 
 
 
     def _increment_frame_index(self) -> None:
@@ -64,9 +69,3 @@ class AttackAnimation:
     @property
     def attack_type(self) -> int:
         return self._attack_type
-
-
-    def reset(self) -> None:
-        self.frame_counter = 0
-        self.current_frame_index = 0
-        self.duration_timer = 0 

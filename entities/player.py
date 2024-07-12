@@ -70,8 +70,7 @@ class Player(pygame.sprite.Sprite):
         self.animation_component = AnimationComponent(
             entity=self, 
             animation_frames=self.idle_frames,
-            animation_speed=self.ANIMATION_SPEED,
-            event_manager=self.event_manager
+            animation_speed=7
         )
         self.level_manager = LevelManager(self, self.event_manager)
 
